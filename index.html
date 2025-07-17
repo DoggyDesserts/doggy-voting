@@ -32,6 +32,7 @@
       padding: 1rem;
       text-align: center;
       transition: transform 0.2s ease;
+      position: relative;
     }
     .dog-card:hover {
       transform: translateY(-4px);
@@ -61,6 +62,37 @@
       pointer-events: none;
       opacity: 0.7;
     }
+    .share-btn {
+      margin-left: 0.5rem;
+      padding: 0.3rem 0.8rem;
+      border: none;
+      border-radius: 20px;
+      background: #eee;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .share-btn:hover {
+      background: #e1f7f6;
+    }
+    .tooltip {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #222;
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+      z-index: 10;
+    }
+    .tooltip.show {
+      opacity: 1;
+    }
   </style>
 </head>
 <body>
@@ -70,13 +102,24 @@
       <h2 class="text-2xl font-semibold text-gray-800 mt-2">Monthly Dog Photo Competition</h2>
       <p class="text-gray-600 mt-1">Vote for your favourite doggy. Each person can vote once per dog.</p>
     </header>
-
     <div id="gallery" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"></div>
   </div>
-
   <script>
-    // Your real Google Sheet CSV link here:
     const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQBmlL5KZtwZnC7FVy6qUbjIgusWS53DIoAK2pMyDM9f8xuC5_gzzNlYBTt9ncMzK5uxoV1H5KMz8Ap/pub?output=csv";
+    const voteUrl = "https://script.google.com/macros/s/AKfycbxJUiHZ-bnD6TgxBbm07wKOYmaxeSJSejbF87KCpUTCvLxL5W0UIQfyN5OVx1qAr98/exec";
+    const votedKey = "voted_July_2025_";
+    
+    function showTooltip(el, msg) {
+      let tip = el.parentElement.querySelector('.tooltip');
+      if (!tip) {
+        tip = document.createElement('div');
+        tip.className = 'tooltip';
+        el.parentElement.appendChild(tip);
+      }
+      tip.textContent = msg;
+      tip.classList.add('show');
+      setTimeout(() => tip.classList.remove('show'), 1500);
+    }
 
     function fetchData() {
       return fetch(sheetUrl)
@@ -97,8 +140,8 @@
     }
 
     function createCard(dog) {
-      const votedKey = `voted_July_2025_${dog.id}`;
-      const hasVoted = localStorage.getItem(votedKey);
+      const voteLocalKey = votedKey + dog.id;
+      const hasVoted = localStorage.getItem(voteLocalKey);
 
       const div = document.createElement("div");
       div.className = "dog-card";
@@ -106,34 +149,48 @@
       div.innerHTML = `
         <img src="${dog.image}" alt="${dog.name}" class="dog-img mb-4">
         <h3 class="text-lg font-semibold text-[var(--teal)]">${dog.name}</h3>
-        <div class="vote-btn ${hasVoted ? 'voted' : ''}" data-id="${dog.id}">
-          ♡ Vote
-        </div>
         <div class="mt-2 text-gray-700">Votes: <span class="vote-count">${dog.votes}</span></div>
+        <div style="margin-top: 0.75rem;">
+          <button class="vote-btn${hasVoted ? ' voted' : ''}" data-id="${dog.id}">${hasVoted ? '✓ Voted' : '♡ Vote'}</button>
+          <button class="share-btn" title="Copy link to this dog">Share</button>
+        </div>
+        <div class="tooltip"></div>
       `;
 
-      const button = div.querySelector(".vote-btn");
+      // Vote button logic
+      const voteBtn = div.querySelector(".vote-btn");
       const voteCount = div.querySelector(".vote-count");
-
       if (!hasVoted) {
-        button.addEventListener("click", () => {
-          localStorage.setItem(votedKey, "true");
-          button.classList.add("voted");
-          button.textContent = "✓ Voted";
+        voteBtn.addEventListener("click", () => {
+          voteBtn.disabled = true;
+          voteBtn.classList.add('voted');
+          voteBtn.textContent = "✓ Voted";
+          localStorage.setItem(voteLocalKey, "true");
+          // Show a spinner or feedback if you want
 
-          // Increment local display immediately
-          voteCount.textContent = parseInt(voteCount.textContent, 10) + 1;
-
-          // Your real Apps Script endpoint here:
-          fetch("https://script.google.com/macros/s/AKfycbxJUiHZ-bnD6TgxBbm07wKOYmaxeSJSejbF87KCpUTCvLxL5W0UIQfyN5OVx1qAr98/exec", {
+          fetch(voteUrl, {
             method: "POST",
             body: new URLSearchParams({ id: dog.id }),
             mode: "no-cors"
           });
+          // Instantly update display for user
+          voteCount.textContent = parseInt(voteCount.textContent, 10) + 1;
         });
       } else {
-        button.textContent = "✓ Voted";
+        voteBtn.disabled = true;
+        voteBtn.textContent = "✓ Voted";
       }
+
+      // Share button logic
+      const shareBtn = div.querySelector(".share-btn");
+      shareBtn.addEventListener("click", () => {
+        const url = `${window.location.origin}${window.location.pathname}#dog-${dog.id}`;
+        navigator.clipboard.writeText(url);
+        showTooltip(shareBtn, "Link copied!");
+      });
+
+      // Add ID for anchor links
+      div.id = `dog-${dog.id}`;
 
       return div;
     }
@@ -144,6 +201,7 @@
       dogs.forEach(dog => container.appendChild(createCard(dog)));
     }
 
+    // Load and render data
     document.addEventListener("DOMContentLoaded", () => {
       fetchData().then(renderDogs);
     });
