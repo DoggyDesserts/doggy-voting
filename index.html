@@ -1,235 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Doggy Desserts – Monthly Dog Photo Competition</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Doggy Desserts Monthly Dog Competition</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;400&display=swap" rel="stylesheet">
   <style>
     body {
-      margin: 0;
-      background: #fffbe6;
+      background: #fdfaf6;
       font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
     }
     header {
+      text-align: centre;
       background: #25b3ad;
-      color: #fff;
-      padding: 2rem 0 1rem 0;
-      text-align: center;
-    }
-    header h1 {
-      margin: 0 0 0.5rem 0;
-      font-size: 2.3rem;
-      font-weight: 700;
+      colour: #fff;
+      padding: 2.5rem 0 1.5rem 0;
+      font-size: 2.5rem;
+      font-weight: 600;
       letter-spacing: 1px;
     }
-    header p {
-      margin: 0;
-      font-size: 1.1rem;
+    .subtitle {
+      text-align: centre;
+      font-size: 1.3rem;
       font-weight: 400;
+      margin-top: 0.3rem;
+      margin-bottom: 2.2rem;
+      colour: #222;
     }
-    .container {
-      max-width: 1100px;
-      margin: 2rem auto 0 auto;
-      padding: 2rem;
-      background: #fff;
-      border-radius: 22px;
-      box-shadow: 0 6px 24px rgba(0,0,0,0.07);
+    .dog-list {
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
-      gap: 2rem;
+      gap: 40px;
+      justify-content: centre;
+      margin: 0 auto;
+      max-width: 1100px;
+      padding-bottom: 3rem;
     }
-    .dog-card {
-      background: #f9f9ff;
-      border-radius: 16px;
-      box-shadow: 0 2px 9px rgba(37,179,173,0.08);
-      width: 270px;
+    .dog-item {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      padding: 1.2rem 1.2rem 1rem 1.2rem;
-      transition: box-shadow 0.18s;
-      position: relative;
+      align-items: centre;
+      min-width: 220px;
+      margin-bottom: 20px;
     }
-    .dog-card:hover {
-      box-shadow: 0 5px 18px rgba(37,179,173,0.15);
-    }
-    .dog-card img {
-      width: 110px;
-      height: 110px;
+    .dog-img {
+      width: 140px;
+      height: 140px;
       object-fit: cover;
-      border-radius: 50%;
-      margin-bottom: 0.7rem;
-      background: #e7e9ef;
-      border: 3px solid #eee;
+      border-radius: 14px;
+      margin-bottom: 1rem;
+      border: 2px solid #eee;
+      background: #fff;
     }
     .dog-name {
-      font-size: 1.22rem;
+      font-size: 1.2rem;
       font-weight: 600;
-      margin: 0.3rem 0 0.2rem 0;
-      letter-spacing: 0.3px;
-      color: #25b3ad;
-      text-align: center;
-    }
-    .vote-count {
-      font-size: 1rem;
+      letter-spacing: 1px;
       margin-bottom: 0.6rem;
-      color: #222;
-      font-weight: 500;
+      colour: #25b3ad;
+      text-transform: uppercase;
     }
-    .vote-btn, .share-btn {
+    .vote-btn {
       background: #25b3ad;
       colour: #fff;
       border: none;
-      padding: 0.55rem 1.2rem;
-      border-radius: 32px;
+      padding: 0.55rem 1.4rem;
+      border-radius: 8px;
       font-size: 1rem;
-      font-family: inherit;
       font-weight: 600;
-      margin: 0.15rem;
       cursor: pointer;
-      transition: background 0.14s, transform 0.15s;
-      box-shadow: 0 2px 7px rgba(37,179,173,0.09);
-    }
-    .share-btn {
-      background: #e7e9ef;
-      colour: #222;
-      font-weight: 500;
+      margin-bottom: 0.8rem;
+      transition: background 0.15s;
+      box-shadow: none;
     }
     .vote-btn:disabled {
-      background: #9fdedb;
-      cursor: default;
+      background: #b1dedb;
       colour: #fff;
+      cursor: not-allowed;
     }
-    .voted {
-      background: #c7f3ed;
-      colour: #222;
+    .votes-count {
+      font-size: 0.98rem;
+      colour: #333;
+      margin-bottom: 0.5rem;
     }
-    @media (max-width: 700px) {
-      .container { padding: 1rem; }
-      .dog-card { width: 97vw; max-width: 350px;}
+    @media (max-width: 800px) {
+      .dog-list {
+        flex-direction: column;
+        align-items: centre;
+        gap: 28px;
+      }
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Doggy Desserts</h1>
-    <p>Monthly Dog Photo Competition</p>
-  </header>
-  <div class="container" id="dogs"></div>
+  <header>Doggy Desserts</header>
+  <div class="subtitle">
+    Monthly Dog Photo Competition<br>
+    Vote for your favourite doggy. Each person can vote once per dog.
+  </div>
+  <div class="dog-list" id="dogs"></div>
 
   <script>
-    // Update these with your own links:
-    const sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQBmlL5KZtwZnC7FVy6qUbjIgusWS53DIoAK2pMyDM9f8xuC5_gzzNlYBTt9ncMzK5uxoV1H5KMz8Ap/pub?output=csv';
-    const submitURL = 'https://script.google.com/macros/s/AKfycbyqMg0l0LXz9zUwSj1dn2HXG2LmMBAVp_cVAXgXOiXF27qvoLi2UaPJgN3kFZEVppw/exec';
+    // ==== CONFIGURE THESE ====
+    const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT6MBX0N8yqU5Jz5H4W3G5EnYuBJm7XKy3YLXvWVtxXQLploHlcU-3VuHjjfjboZC2nzuelzieNuLSH/pub?output=csv';
+    const VOTE_URL = 'https://script.google.com/macros/s/AKfycbyqMg0l0LXz9zUwSj1dn2HXG2LmMBAVp_cVAXgXOiXF27qvoLi2UaPJgN3kFZEVppw/exec';
+    // =========================
 
-    // Helpers for storage (for "voted" status)
-    function getVotedIds() {
-      try { return JSON.parse(localStorage.getItem("votedDogIds") || "[]"); } catch { return []; }
-    }
-    function markVoted(id) {
-      const ids = getVotedIds();
-      ids.push(id);
-      localStorage.setItem("votedDogIds", JSON.stringify([...new Set(ids)]));
-    }
-    function hasVoted(id) {
-      return getVotedIds().includes(id);
-    }
+    const voted = JSON.parse(localStorage.getItem("votedDogs") || "[]");
 
-    // Main render function
-    function renderDogs(dogs) {
-      const container = document.getElementById("dogs");
-      container.innerHTML = "";
-      dogs.forEach(dog => {
-        const card = document.createElement("div");
-        card.className = "dog-card";
+    function createDogItem(dog) {
+      const wrap = document.createElement('div');
+      wrap.className = 'dog-item';
 
-        const img = document.createElement("img");
-        img.src = dog.image;
-        img.alt = dog.name;
+      const img = document.createElement('img');
+      img.className = 'dog-img';
+      img.src = dog.IMAGE;
+      img.alt = dog.NAME;
 
-        const name = document.createElement("div");
-        name.className = "dog-name";
-        name.textContent = dog.name;
+      const name = document.createElement('div');
+      name.className = 'dog-name';
+      name.textContent = dog.NAME;
 
-        const votes = document.createElement("div");
-        votes.className = "vote-count";
-        votes.textContent = `Votes: ${dog.votes}`;
+      const btn = document.createElement('button');
+      btn.className = 'vote-btn';
+      btn.textContent = voted.includes(dog.ID) ? '✓ Voted' : 'Vote';
+      btn.disabled = voted.includes(dog.ID);
 
-        const voteBtn = document.createElement("button");
-        voteBtn.className = "vote-btn";
-        voteBtn.textContent = hasVoted(dog.id) ? "✓ Voted" : "Vote";
-        voteBtn.disabled = hasVoted(dog.id);
+      const votes = document.createElement('div');
+      votes.className = 'votes-count';
+      votes.textContent = `Votes: ${dog.VOTES}`;
 
-        voteBtn.onclick = () => {
-          voteBtn.disabled = true;
-          voteBtn.textContent = "✓ Voted";
-          voteBtn.classList.add("voted");
-          fetch(submitURL, {
-            method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: `id=${encodeURIComponent(dog.id)}`
-          })
-            .then(res => res.json())
-            .then(data => {
-              if (data.success) {
-                votes.textContent = `Votes: ${data.newVotes}`;
-                markVoted(dog.id);
-              } else {
-                voteBtn.textContent = "Error, try again";
-                voteBtn.disabled = false;
-              }
-            })
-            .catch(() => {
-              voteBtn.textContent = "Error";
-              voteBtn.disabled = false;
-            });
-        };
-
-        // Share button
-        const shareBtn = document.createElement("button");
-        shareBtn.className = "share-btn";
-        shareBtn.textContent = "Share";
-        shareBtn.onclick = () => {
-          const url = `${window.location.origin}${window.location.pathname}#dog-${dog.id}`;
-          if (navigator.share) {
-            navigator.share({ title: dog.name, text: `Vote for ${dog.name} in the Doggy Desserts competition!`, url });
+      btn.onclick = function () {
+        btn.disabled = true;
+        btn.textContent = '✓ Voted';
+        fetch(VOTE_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: `id=${encodeURIComponent(dog.ID)}`
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            votes.textContent = `Votes: ${data.newVotes}`;
+            voted.push(dog.ID);
+            localStorage.setItem("votedDogs", JSON.stringify(voted));
           } else {
-            navigator.clipboard.writeText(url);
-            shareBtn.textContent = "Copied!";
-            setTimeout(() => { shareBtn.textContent = "Share"; }, 1100);
+            btn.disabled = false;
+            btn.textContent = 'Vote';
+            alert('Sorry, your vote could not be registered.');
           }
-        };
+        })
+        .catch(() => {
+          btn.disabled = false;
+          btn.textContent = 'Vote';
+          alert('There was an error. Please try again.');
+        });
+      };
 
-        card.appendChild(img);
-        card.appendChild(name);
-        card.appendChild(votes);
-        card.appendChild(voteBtn);
-        card.appendChild(shareBtn);
+      wrap.appendChild(img);
+      wrap.appendChild(name);
+      wrap.appendChild(btn);
+      wrap.appendChild(votes);
 
-        card.id = `dog-${dog.id}`;
-        container.appendChild(card);
-      });
+      return wrap;
     }
 
-    // Fetch and parse CSV
-    fetch(sheetURL)
+    fetch(SHEET_URL)
       .then(r => r.text())
       .then(text => {
-        const rows = text.split('\n').map(row => row.split(','));
-        const dogs = [];
-        for (let i = 1; i < rows.length; i++) {
-          const row = rows[i];
-          if (!row[0] || !row[1] || !row[4]) continue;
-          dogs.push({
-            id: row[0].trim(),
-            name: row[1].trim(),
-            votes: Number(row[2].trim() || 0),
-            image: row[4].trim()
-          });
-        }
-        renderDogs(dogs);
+        const rows = text.trim().split('\n').map(x => x.split(','));
+        rows.shift(); // remove headers
+        const dogData = rows.map(row => ({
+          ID: row[0],
+          NAME: row[1],
+          VOTES: row[2],
+          DATE: row[3],
+          IMAGE: row[4]
+        }));
+        const dogs = document.getElementById('dogs');
+        dogData.forEach(dog => dogs.appendChild(createDogItem(dog)));
       });
   </script>
 </body>
