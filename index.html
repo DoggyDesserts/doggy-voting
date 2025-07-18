@@ -1,320 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Doggy Desserts – Monthly Dog Competition</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
   <style>
-    :root {
-      --teal: #25b3ad;
-      --cream: #fffbee;
-      --heart: #ef476f;
-      --shadow: 0 6px 32px rgba(37, 179, 173, 0.09);
-    }
-    html, body {
-      background: var(--cream);
+    body {
       font-family: 'Poppins', sans-serif;
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+      background: #fffbe9;
     }
-    header {
-      background: var(--teal);
-      color: white;
-      text-align: center;
-      padding: 2.3rem 1rem 1.3rem 1rem;
-      font-size: 2.2rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-    }
-    header h2 {
-      font-size: 1.4rem;
-      font-weight: 600;
-      margin-top: 0.4rem;
-      margin-bottom: 0.7rem;
-    }
-    header p {
-      margin: 0.2rem 0 0 0;
-      font-weight: 400;
-      font-size: 1.05rem;
-      letter-spacing: 0.03rem;
-    }
-    .container {
-      max-width: 1100px;
-      margin: 2.5rem auto 0 auto;
-      background: #fff;
-      border-radius: 18px;
-      box-shadow: var(--shadow);
-      padding: 2.2rem 1.7rem 2.7rem 1.7rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .dogs-list {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 2rem;
-      width: 100%;
-      margin-top: 0.2rem;
-    }
-    .dog-card {
-      background: #fdfdfd;
-      border-radius: 1.2rem;
-      box-shadow: 0 3px 14px rgba(37, 179, 173, 0.05);
-      padding: 1.2rem 1.2rem 1.7rem 1.2rem;
-      width: 270px;
-      text-align: center;
-      transition: transform 0.15s, box-shadow 0.2s;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .dog-card:hover {
-      transform: translateY(-5px) scale(1.035);
-      box-shadow: 0 8px 26px rgba(37, 179, 173, 0.14);
-    }
-    .dog-img {
-      width: 150px;
-      height: 150px;
-      object-fit: cover;
-      border-radius: 1rem;
-      margin-bottom: 1.1rem;
-      box-shadow: 0 3px 12px rgba(37, 179, 173, 0.10);
-      border: 4px solid #f0f0f0;
-      background: #eee;
-      transition: box-shadow 0.2s;
-    }
-    .dog-card:hover .dog-img {
-      box-shadow: 0 6px 18px rgba(239, 71, 111, 0.12);
-    }
-    .dog-name {
-      font-size: 1.25rem;
-      font-weight: 600;
-      colour: var(--teal);
-      letter-spacing: 0.03rem;
-      margin-bottom: 0.4rem;
-      text-transform: uppercase;
-      color: var(--teal);
-    }
-    .votes {
-      font-size: 1rem;
-      margin-bottom: 1rem;
-      color: #333;
-    }
-    .vote-btn {
-      background: none;
-      border: none;
-      outline: none;
-      cursor: pointer;
-      display: flex;
-      align-items: centre;
-      justify-content: centre;
-      font-size: 1.08rem;
-      margin-bottom: 0.5rem;
-      transition: transform 0.07s;
-      gap: 0.5rem;
-    }
-    .vote-btn:active {
-      transform: scale(0.94);
-    }
-    .heart {
-      font-size: 2.3rem;
-      color: #dadada;
-      transition: color 0.18s, transform 0.12s;
-      margin-right: 0.6rem;
-      vertical-align: middle;
-      filter: drop-shadow(0 1px 0.8px #eee);
-      user-select: none;
-    }
-    .heart.voted {
-      color: var(--heart);
-      animation: heart-pop 0.4s cubic-bezier(.57,1.55,.34,1.06);
-      text-shadow: 0 2px 8px #fdaabf44;
-    }
-    @keyframes heart-pop {
-      0% { transform: scale(1); }
-      35% { transform: scale(1.27); }
-      50% { transform: scale(1.12);}
-      80% { transform: scale(1.18);}
-      100% { transform: scale(1);}
-    }
-    .share-btn {
-      margin-top: 0.25rem;
-      background: #e5f8f7;
-      color: #009fa0;
-      border: none;
-      border-radius: 2em;
-      font-size: 0.97rem;
-      padding: 0.39rem 1.2rem;
-      cursor: pointer;
-      font-weight: 500;
-      transition: background 0.15s, color 0.14s;
-      position: relative;
-      outline: none;
-      margin-bottom: 0.05rem;
-    }
-    .share-btn:hover, .share-btn:focus {
-      background: #bff2ec;
-      color: #017c7e;
-    }
-    .tooltip {
+    .popup {
+      position: fixed;
+      top: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #25b3ad;
+      color: #fff;
+      padding: 12px 28px;
+      border-radius: 2rem;
+      font-size: 1.1rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      z-index: 1000;
       opacity: 0;
       pointer-events: none;
-      position: absolute;
-      left: 50%;
-      top: 97%;
-      transform: translateX(-50%);
-      background: #191919;
-      color: #fff;
-      font-size: 0.87rem;
-      border-radius: 7px;
-      padding: 4px 13px;
-      transition: opacity 0.23s;
-      margin-top: 0.3rem;
-      z-index: 1;
-      font-weight: 500;
-      letter-spacing: 0.03em;
+      transition: opacity 0.25s;
     }
-    .tooltip.show {
+    .popup.show {
       opacity: 1;
-    }
-    @media (max-width: 980px) {
-      .dogs-list {
-        gap: 1.3rem;
-      }
-      .container {
-        padding: 1.3rem 0.2rem 2.2rem 0.2rem;
-      }
-    }
-    @media (max-width: 700px) {
-      .dogs-list {
-        flex-direction: column;
-        align-items: center;
-        gap: 1.4rem;
-      }
-      .container {
-        padding: 0.8rem 0.2rem 1.2rem 0.2rem;
-      }
+      pointer-events: auto;
     }
   </style>
 </head>
 <body>
-  <header>
-    Doggy Desserts
-    <h2>Monthly Dog Photo Competition</h2>
-    <p>Vote for your favourite doggy. Each person can vote once per dog.</p>
+  <header class="bg-[#25b3ad] py-8 text-center">
+    <h1 class="text-white font-bold text-4xl mb-2" style="font-family:'Poppins',sans-serif;">Doggy Desserts</h1>
+    <div class="text-white text-xl font-semibold">Monthly Dog Photo Competition</div>
+    <div class="text-white text-base mt-2">Vote for your favourite doggy. Each person can vote once per dog.</div>
   </header>
-  <div class="container">
-    <div class="dogs-list" id="dogs"></div>
+  <div class="min-h-screen flex items-center justify-center py-10">
+    <div class="bg-white rounded-2xl shadow-xl px-8 py-10 max-w-5xl w-full">
+      <div id="dogs" class="grid grid-cols-1 md:grid-cols-3 gap-10 justify-items-center"></div>
+    </div>
   </div>
+  <div id="popup" class="popup">Thanks for voting!</div>
   <script>
-    // Change these to your actual URLs
-    const sheetCSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQBmlL5KZtwZnC7FVy6qUbjIgusWS53DIoAK2pMyDM9f8xuC5_gzzNlYBTt9ncMzK5uxoV1H5KMz8Ap/pub?output=csv';
-    const apiURL = 'https://script.google.com/macros/s/AKfycbyqMg0l0LXz9zUwSj1dn2HXG2LmMBAVp_cVAXgXOiXF27qvoLi2UaPJgN3kFZEVppw/exec';
+    // Sheet and Script URLs (update if yours are different)
+    const SHEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQBmlL5KZtwZnC7FVy6qUbjIgusWS53DIoAK2pMyDM9f8xuC5_gzzNlYBTt9ncMzK5uxoV1H5KMz8Ap/pub?output=csv';
+    const VOTE_API = 'https://script.google.com/macros/s/AKfycbyqMg0l0LXz9zUwSj1dn2HXG2LmMBAVp_cVAXgXOiXF27qvoLi2UaPJgN3kFZEVppw/exec';
+    const votedKey = 'doggyVotes';
 
     function getVoted() {
-      try { return JSON.parse(localStorage.getItem('doggyVotes') || '[]'); }
+      try { return JSON.parse(localStorage.getItem(votedKey) || '[]'); }
       catch { return []; }
     }
-    function setVoted(voted) {
-      localStorage.setItem('doggyVotes', JSON.stringify(voted));
+    function setVoted(arr) {
+      localStorage.setItem(votedKey, JSON.stringify(arr));
+    }
+    function showPopup(msg) {
+      const pop = document.getElementById('popup');
+      pop.textContent = msg;
+      pop.classList.add('show');
+      setTimeout(() => pop.classList.remove('show'), 1500);
     }
 
-    function showTooltip(el, msg) {
-      let tip = el.parentElement.querySelector('.tooltip');
-      if (!tip) {
-        tip = document.createElement('div');
-        tip.className = 'tooltip';
-        el.parentElement.appendChild(tip);
-      }
-      tip.textContent = msg;
-      tip.classList.add('show');
-      setTimeout(() => tip.classList.remove('show'), 1400);
-    }
-
-    function createCard(dog, voted) {
-      const card = document.createElement('div');
-      card.className = 'dog-card';
-      card.id = `dog-${dog.id}`;
-      card.innerHTML = `
-        <img class="dog-img" src="${dog.image}" alt="${dog.name}" loading="lazy"/>
-        <div class="dog-name">${dog.name}</div>
-        <div class="votes">Votes: <span id="votes-${dog.id}">${dog.votes}</span></div>
-        <button class="vote-btn" id="vote-${dog.id}">
-          <span class="heart${voted.includes(dog.id) ? ' voted' : ''}">&#10084;</span>
-          <span>${voted.includes(dog.id) ? "Voted" : "Vote"}</span>
-        </button>
-        <button class="share-btn" type="button">Share</button>
-        <div class="tooltip"></div>
-      `;
-      // Vote logic
-      const voteBtn = card.querySelector('.vote-btn');
-      const heart = card.querySelector('.heart');
-      if (voted.includes(dog.id)) {
-        voteBtn.disabled = true;
-        voteBtn.classList.add('voted');
-      }
-      voteBtn.onclick = function() {
-        if (voted.includes(dog.id)) return;
-        voteBtn.disabled = true;
-        heart.classList.add('voted');
-        voteBtn.classList.add('voted');
-        voteBtn.querySelector('span:last-child').textContent = "Voted";
-        // Update instantly
-        const votesSpan = card.querySelector(`#votes-${dog.id}`);
-        votesSpan.textContent = Number(votesSpan.textContent) + 1;
-        // Save locally
-        voted.push(dog.id);
-        setVoted(voted);
-        // Fire API call
-        fetch(apiURL, {
-          method: 'POST',
-          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-          body: 'id=' + encodeURIComponent(dog.id)
-        }).then(r => r.json()).then(res => {
-          if (res.success && res.newVotes !== undefined) {
-            votesSpan.textContent = res.newVotes;
-          }
-        }).catch(()=>{});
-      };
-      // Share logic
-      const shareBtn = card.querySelector('.share-btn');
-      shareBtn.onclick = function() {
-        const url = `${window.location.origin}${window.location.pathname}#dog-${dog.id}`;
-        if (navigator.share) {
-          navigator.share({title: `Vote for ${dog.name} at Doggy Desserts`, url});
-        } else {
-          navigator.clipboard.writeText(url);
-          showTooltip(shareBtn, "Link copied!");
-        }
-      };
-      return card;
-    }
-
-    function renderDogs(dogs) {
-      const container = document.getElementById('dogs');
-      container.innerHTML = "";
-      const voted = getVoted();
-      dogs.forEach(dog => container.appendChild(createCard(dog, voted)));
-    }
-
-    function fetchData() {
-      return fetch(sheetCSV)
+    function fetchDogs() {
+      return fetch(SHEET_CSV)
         .then(r => r.text())
         .then(csv => {
-          const lines = csv.trim().split('\n').slice(1);
-          return lines.map(row => {
-            const [id, name, votes, , image] = row.split(',');
-            return { id: id.trim(), name: name.trim(), votes: Number(votes), image: image.trim() };
+          return csv.trim().split('\n').slice(1).map(row => {
+            const [id, name, votes, date, image] = row.split(',');
+            return {
+              id: id.trim(),
+              name: name.trim(),
+              votes: parseInt(votes, 10) || 0,
+              img: image.trim()
+            };
           });
         });
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
-      fetchData().then(renderDogs);
+    function renderDogs(dogs) {
+      const voted = getVoted();
+      const dogsDiv = document.getElementById('dogs');
+      dogsDiv.innerHTML = '';
+      dogs.forEach(dog => {
+        // Card
+        const card = document.createElement('div');
+        card.className = "flex flex-col items-center bg-[#fcfcfd] rounded-2xl shadow-lg p-7 w-[270px]";
+
+        // Dog Image
+        const img = document.createElement('img');
+        img.src = dog.img;
+        img.alt = dog.name;
+        img.className = "rounded-xl mb-5 object-cover w-[180px] h-[180px] border bg-[#ececec]";
+        card.appendChild(img);
+
+        // Name
+        const name = document.createElement('div');
+        name.className = "text-2xl font-bold mb-5 text-black text-center";
+        name.textContent = dog.name;
+        card.appendChild(name);
+
+        // Vote Row
+        const voteRow = document.createElement('div');
+        voteRow.className = "flex flex-row items-center justify-center gap-2 w-full mb-4";
+        // Heart
+        const heart = document.createElement('span');
+        heart.innerHTML = voted.includes(dog.id) ? 
+          `<svg fill="#e53935" viewBox="0 0 24 24" width="26" height="26"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`
+          : `<svg fill="none" stroke="#bdbdbd" stroke-width="2" viewBox="0 0 24 24" width="26" height="26"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
+        heart.className = "mr-1";
+        voteRow.appendChild(heart);
+
+        // Vote Button
+        const voteBtn = document.createElement('button');
+        voteBtn.className = "ml-2 px-7 py-1.5 bg-[#25b3ad] text-white font-semibold rounded-full text-lg shadow transition disabled:bg-[#eee] disabled:text-[#bdbdbd]";
+        voteBtn.textContent = voted.includes(dog.id) ? "Voted" : "Vote";
+        voteBtn.disabled = voted.includes(dog.id);
+        voteRow.appendChild(voteBtn);
+
+        // Vote Count
+        const voteCount = document.createElement('span');
+        voteCount.className = "block ml-2 text-base text-gray-500";
+        voteCount.textContent = `Votes: ${dog.votes}`;
+        voteRow.appendChild(voteCount);
+
+        // Vote logic
+        voteBtn.onclick = () => {
+          voteBtn.disabled = true;
+          voteBtn.textContent = "Voted";
+          heart.innerHTML = `<svg fill="#e53935" viewBox="0 0 24 24" width="26" height="26"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
+          let votesNow = parseInt(voteCount.textContent.replace('Votes: ',''), 10) + 1;
+          voteCount.textContent = `Votes: ${votesNow}`;
+          let votedArr = getVoted();
+          votedArr.push(dog.id);
+          setVoted(votedArr);
+          showPopup('Thanks for voting!');
+          // Register vote in Google Sheet
+          fetch(VOTE_API, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: 'id=' + encodeURIComponent(dog.id)
+          });
+        };
+
+        card.appendChild(voteRow);
+
+        // Share Row
+        const shareRow = document.createElement('div');
+        shareRow.className = "flex flex-row items-center justify-center gap-2 w-full";
+        // Share icon
+        const shareIcon = document.createElement('span');
+        shareIcon.innerHTML = `<svg fill="#25b3ad" viewBox="0 0 24 24" width="24" height="24"><path d="M18 8.59l-7.17-7.17-1.41 1.41L15.17 8H5v2h10.17l-5.75 5.75 1.41 1.41L18 10.41z"/></svg>`;
+        shareRow.appendChild(shareIcon);
+
+        // Share Button
+        const shareBtn = document.createElement('button');
+        shareBtn.className = "ml-2 px-6 py-1 bg-[#e1f7f6] text-[#25b3ad] font-semibold rounded-full text-base shadow";
+        shareBtn.textContent = "Share";
+        shareBtn.onclick = () => {
+          const url = `${window.location.origin}${window.location.pathname}#dog-${dog.id}`;
+          navigator.clipboard.writeText(url);
+          showPopup("Link copied!");
+        };
+        shareRow.appendChild(shareBtn);
+
+        card.appendChild(shareRow);
+
+        // ID for anchor
+        card.id = "dog-" + dog.id;
+
+        dogsDiv.appendChild(card);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      fetchDogs().then(renderDogs);
     });
   </script>
 </body>
