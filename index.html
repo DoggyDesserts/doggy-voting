@@ -22,7 +22,7 @@
       border-radius: 1.2rem;
       box-shadow: 0 4px 20px rgba(0,0,0,0.09);
       padding: 2.2rem 1.4rem 2rem 1.4rem;
-      text-align: centre;
+      text-align: center;
       position: relative;
       transition: box-shadow 0.2s;
       margin-bottom: 1.5rem;
@@ -45,7 +45,7 @@
       font-weight: 700;
       letter-spacing: 0.02em;
       margin: 0.6rem 0 1.3rem 0;
-      text-align: centre;
+      text-align: center;
       color: #20262a;
     }
     .heart {
@@ -98,7 +98,7 @@
     }
     .share-btn {
       display: inline-flex;
-      align-items: centre;
+      align-items: center;
       background: #e8fbf9;
       color: #25b3ad;
       font-weight: 600;
@@ -133,7 +133,7 @@
       background: #fff8ea;
       padding: 1.3rem 0 0.8rem 0;
       font-size: 1.18rem;
-      text-align: centre;
+      text-align: center;
       color: #25b3ad;
       font-weight: 600;
       margin-bottom: 0.3rem;
@@ -152,7 +152,7 @@
   </header>
 
   <main>
-    <div class="flex flex-wrap justify-centre gap-10 max-w-5xl mx-auto mt-3 mb-10" id="dogs"></div>
+    <div class="flex flex-wrap justify-center gap-10 max-w-5xl mx-auto mt-3 mb-10" id="dogs"></div>
   </main>
 
   <script>
@@ -204,14 +204,14 @@
         card.innerHTML = `
           <img class="dog-photo mx-auto" src="${dog.img}" alt="${dog.name}" />
           <div class="dog-name">${dog.name.toUpperCase()} <span class="paw">🐾</span></div>
-          <div class="flex flex-row items-centre justify-centre gap-2 mb-3 mt-3">
+          <div class="flex flex-row items-center justify-center gap-2 mb-3 mt-3">
             <svg class="heart ${votedForThis ? 'active' : 'inactive'}" data-id="${dog.id}" viewBox="0 0 24 24">
               <path d="M12 21s-5.7-4.8-8.3-7.6A5.36 5.36 0 0 1 3 7.7a5.47 5.47 0 0 1 9-3.91A5.47 5.47 0 0 1 21 7.7a5.36 5.36 0 0 1-.7 5.7C17.7 16.2 12 21 12 21z"/>
             </svg>
             <button class="vote-btn ${votedForThis ? 'voted' : ''}" ${votedForThis ? 'disabled' : ''} data-id="${dog.id}">
               ${votedForThis ? 'Voted! 🎉' : 'Vote'}
             </button>
-            <span class="votes-count">Votes:<br><span id="votes-${dog.id}">${dog.votes}</span></span>
+            <span class="votes-count">Votes: <span id="votes-${dog.id}">${dog.votes}</span></span>
           </div>
           <button class="share-btn mt-1" onclick="navigator.clipboard.writeText(window.location.origin+window.location.pathname+'#dog-${dog.id}'); this.querySelector('span').textContent='Link copied!'; setTimeout(()=>this.querySelector('span').textContent='Share',1400);">
             <svg width="18" height="18" fill="#25b3ad" viewBox="0 0 20 20"><path d="M13 7.75V5a3 3 0 1 0-2 2.83V7.75a.75.75 0 0 0 1.5 0z"/><path d="M4 11.25a.75.75 0 1 1 1.5 0v5A2.75 2.75 0 0 0 8.25 19h7.5A2.75 2.75 0 0 0 18.5 16.25v-7.5A2.75 2.75 0 0 0 15.75 6h-3a.75.75 0 0 1 0-1.5h3A4.25 4.25 0 0 1 20 8.75v7.5A4.25 4.25 0 0 1 15.75 20h-7.5A4.25 4.25 0 0 1 4 16.25v-5z"/></svg>
