@@ -14,46 +14,57 @@
     }
     .dog-card {
       background: #fff;
-      border-radius: 1.2rem;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.09);
-      padding: 2.2rem 1.4rem 2rem 1.4rem;
+      border-radius: 1.3rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.10);
+      padding: 2.2rem 1.4rem 1.6rem 1.4rem;
       text-align: center;
       position: relative;
       transition: box-shadow 0.2s;
       margin-bottom: 1.5rem;
+      min-width: 260px;
+      max-width: 310px;
+      margin-left: auto;
+      margin-right: auto;
     }
     .dog-photo {
       border-radius: 1rem;
-      border: 3.5px solid #bff6ef;
-      width: 190px; height: 190px;
+      border: 3px solid #25b3ad;
+      width: 180px; height: 180px;
       object-fit: cover;
       box-shadow: 0 2px 8px rgba(60,100,90,0.10);
-      margin-bottom: 1.2rem;
+      margin-bottom: 1.1rem;
       background: #eee;
       transition: border 0.2s;
     }
     .dog-card:hover .dog-photo {
-      border: 3.5px solid #25b3ad;
+      border: 3px solid #1c9692;
     }
     .dog-name {
-      font-size: 1.5rem;
+      font-size: 1.45rem;
       font-weight: 700;
       letter-spacing: 0.02em;
-      margin: 0.6rem 0 1.3rem 0;
+      margin: 0.3rem 0 1.2rem 0;
       text-align: center;
       color: #20262a;
     }
+    .actions-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.7rem;
+      margin-bottom: 0.5rem;
+    }
     .heart {
-      display: inline-block;
-      width: 2.2rem; height: 2.2rem;
-      vertical-align: middle;
-      margin-right: 0.7rem;
+      width: 2.1rem;
+      height: 2.1rem;
       cursor: pointer;
-      transition: transform 0.13s;
+      transition: transform 0.12s;
+      vertical-align: middle;
+      margin-right: 0.13rem;
     }
     .heart.active {
+      fill: #e74c3c;
       animation: bounceHeart 0.45s;
-      fill: #e74c3c !important;
     }
     .heart.inactive {
       fill: #e0e0e0;
@@ -61,25 +72,22 @@
     }
     @keyframes bounceHeart {
       0% { transform: scale(1);}
-      25% {transform: scale(1.18);}
-      60% {transform: scale(0.92);}
+      25% {transform: scale(1.17);}
+      60% {transform: scale(0.93);}
       100% {transform: scale(1);}
     }
     .vote-btn {
-      display: inline-block;
       background: #25b3ad;
       color: #fff;
       border: none;
       border-radius: 999px;
-      padding: 0.5rem 2.1rem;
+      padding: 0.5rem 1.5rem;
       font-size: 1.1rem;
       font-weight: 600;
-      letter-spacing: 0.01em;
-      margin-right: 0.6rem;
-      margin-left: 0.1rem;
-      margin-bottom: 0.5rem;
-      cursor: pointer;
       transition: background 0.18s;
+      cursor: pointer;
+      min-width: 88px;
+      box-shadow: 0 2px 6px rgba(37,179,173,0.07);
     }
     .vote-btn.voted {
       background: #56e18b;
@@ -87,9 +95,11 @@
       cursor: not-allowed;
     }
     .votes-count {
-      font-size: 1.1rem;
-      color: #788492;
-      margin-left: 0.8rem;
+      font-size: 1.03rem;
+      color: #3a485e;
+      margin-left: 0.1rem;
+      min-width: 52px;
+      text-align: left;
     }
     .share-btn {
       display: inline-flex;
@@ -98,19 +108,21 @@
       color: #25b3ad;
       font-weight: 600;
       border: none;
-      border-radius: 1.6rem;
-      padding: 0.44rem 1.5rem 0.44rem 1rem;
+      border-radius: 1.3rem;
+      padding: 0.44rem 1.2rem 0.44rem 0.8rem;
       font-size: 1rem;
       cursor: pointer;
-      transition: background 0.14s;
-      margin-top: 0.2rem;
+      margin-top: 0.1rem;
+      transition: background 0.12s;
+      min-width: 74px;
+      margin-left: 0.1rem;
     }
     .share-btn svg {
       margin-right: 0.5rem;
       transition: transform 0.2s;
     }
     .share-btn:hover svg {
-      transform: translateX(4px);
+      transform: translateX(3px);
     }
     .confetti {
       position: absolute;
@@ -126,13 +138,16 @@
     }
     .banner {
       background: #fff8ea;
-      padding: 1.3rem 0 0.8rem 0;
-      font-size: 1.18rem;
+      padding: 1.15rem 0 0.6rem 0;
+      font-size: 1.13rem;
       text-align: center;
       color: #25b3ad;
       font-weight: 600;
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.15rem;
       border-radius: 0 0 14px 14px;
+    }
+    @media (max-width: 700px) {
+      .dog-card { max-width: 90vw;}
     }
   </style>
 </head>
@@ -147,7 +162,7 @@
   </header>
 
   <main>
-    <div class="flex flex-wrap justify-center gap-10 max-w-5xl mx-auto mt-3 mb-10" id="dogs"></div>
+    <div class="flex flex-wrap justify-center gap-8 max-w-5xl mx-auto mt-2 mb-10" id="dogs"></div>
   </main>
 
   <script>
@@ -198,14 +213,14 @@
         card.innerHTML = `
           <img class="dog-photo mx-auto" src="${dog.img}" alt="${dog.name}" />
           <div class="dog-name">${dog.name.toUpperCase()}</div>
-          <div class="flex flex-row items-center justify-center gap-2 mb-3 mt-3">
+          <div class="actions-row">
             <svg class="heart ${votedForThis ? 'active' : 'inactive'}" data-id="${dog.id}" viewBox="0 0 24 24">
               <path d="M12 21s-5.7-4.8-8.3-7.6A5.36 5.36 0 0 1 3 7.7a5.47 5.47 0 0 1 9-3.91A5.47 5.47 0 0 1 21 7.7a5.36 5.36 0 0 1-.7 5.7C17.7 16.2 12 21 12 21z"/>
             </svg>
             <button class="vote-btn ${votedForThis ? 'voted' : ''}" ${votedForThis ? 'disabled' : ''} data-id="${dog.id}">
               ${votedForThis ? 'Voted! 🎉' : 'Vote'}
             </button>
-            <span class="votes-count">Votes:<br><span id="votes-${dog.id}">${dog.votes}</span></span>
+            <span class="votes-count">Votes: <span id="votes-${dog.id}">${dog.votes}</span></span>
           </div>
           <button class="share-btn mt-1" onclick="navigator.clipboard.writeText(window.location.origin+window.location.pathname+'#dog-${dog.id}'); this.querySelector('span').textContent='Link copied!'; setTimeout(()=>this.querySelector('span').textContent='Share',1400);">
             <svg width="18" height="18" fill="#25b3ad" viewBox="0 0 20 20"><path d="M13 7.75V5a3 3 0 1 0-2 2.83V7.75a.75.75 0 0 0 1.5 0z"/><path d="M4 11.25a.75.75 0 1 1 1.5 0v5A2.75 2.75 0 0 0 8.25 19h7.5A2.75 2.75 0 0 0 18.5 16.25v-7.5A2.75 2.75 0 0 0 15.75 6h-3a.75.75 0 0 1 0-1.5h3A4.25 4.25 0 0 1 20 8.75v7.5A4.25 4.25 0 0 1 15.75 20h-7.5A4.25 4.25 0 0 1 4 16.25v-5z"/></svg>
@@ -216,24 +231,16 @@
         // Heart voting logic
         card.querySelector('.heart').onclick = function() {
           if (this.classList.contains('active')) return;
-          // Animate heart
           this.classList.add('active');
-          // Confetti
           showConfetti(card);
-          // Vote button feedback
           const voteBtn = card.querySelector('.vote-btn');
           voteBtn.classList.add('voted');
           voteBtn.disabled = true;
           voteBtn.textContent = 'Voted! 🎉';
-          // Increase votes instantly
           let vSpan = card.querySelector('#votes-' + dog.id);
           vSpan.textContent = parseInt(vSpan.textContent) + 1;
-
-          // Save voted dog
           voted.push(dog.id);
           localStorage.setItem('doggyVotes', JSON.stringify(voted));
-
-          // Call API
           fetch(apiURL, {
             method: 'POST',
             headers: {'Content-Type':'application/x-www-form-urlencoded'},
@@ -241,16 +248,13 @@
           });
         };
 
-        // Vote button (triggers heart if not voted)
         card.querySelector('.vote-btn').onclick = function() {
           if (!card.querySelector('.heart').classList.contains('active')) {
             card.querySelector('.heart').click();
           }
         };
 
-        // Set anchor for sharing
         card.id = 'dog-' + dog.id;
-
         dogsDiv.appendChild(card);
       });
     }
