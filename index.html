@@ -21,6 +21,9 @@
       position: relative;
       transition: box-shadow 0.2s;
       margin-bottom: 1.5rem;
+      min-width: 270px;
+      max-width: 320px;
+      width: 100%;
     }
     .dog-photo {
       border-radius: 1rem;
@@ -44,27 +47,28 @@
       text-align: center;
       color: #20262a;
     }
-    .heart {
-      display: inline-block;
+    .heart-btn {
+      background: none;
+      border: none;
+      padding: 0;
+      margin-right: 0.5rem;
+      vertical-align: middle;
+      cursor: pointer;
+      outline: none;
+    }
+    .heart-svg {
       width: 2.1rem;
       height: 2.1rem;
+      display: inline-block;
       vertical-align: middle;
-      margin-right: 0.5rem;
-      cursor: pointer;
+      transition: fill 0.18s, stroke 0.18s;
       stroke: #e0e0e0;
       fill: none;
-      transition: stroke 0.18s, fill 0.2s;
-      position: relative;
-      top: 3px;
     }
-    .heart.active {
-      stroke: #e74c3c;
+    .heart-svg.active {
       fill: #e74c3c;
+      stroke: #e74c3c;
       animation: bounceHeart 0.45s;
-    }
-    .heart.inactive {
-      stroke: #e0e0e0;
-      fill: none;
     }
     @keyframes bounceHeart {
       0% { transform: scale(1);}
@@ -148,6 +152,23 @@
       margin-bottom: 0.3rem;
       border-radius: 0 0 14px 14px;
     }
+    .dogs-grid {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 2.5rem;
+      justify-content: center;
+      align-items: stretch;
+    }
+    @media (min-width: 700px) {
+      .dogs-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (min-width: 1020px) {
+      .dogs-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
   </style>
 </head>
 <body>
@@ -161,7 +182,7 @@
   </header>
 
   <main>
-    <div class="flex flex-wrap justify-center gap-10 max-w-5xl mx-auto mt-3 mb-10" id="dogs"></div>
+    <div class="dogs-grid max-w-6xl mx-auto mt-3 mb-10 px-4" id="dogs"></div>
   </main>
 
   <script>
@@ -169,7 +190,7 @@
     const sheetCSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQBmlL5KZtwZnC7FVy6qUbjIgusWS53DIoAK2pMyDM9f8xuC5_gzzNlYBTt9ncMzK5uxoV1H5KMz8Ap/pub?output=csv';
     const apiURL = 'https://script.google.com/macros/s/AKfycbyqMg0l0LXz9zUwSj1dn2HXG2LmMBAVp_cVAXgXOiXF27qvoLi2UaPJgN3kFZEVppw/exec';
 
-    // Simple confetti animation
+    // Confetti
     function showConfetti(parent) {
       let confetti = document.createElement('div');
       confetti.className = 'confetti';
@@ -213,11 +234,13 @@
           <img class="dog-photo mx-auto" src="${dog.img}" alt="${dog.name}" />
           <div class="dog-name">${dog.name.toUpperCase()}</div>
           <div class="flex flex-row items-center justify-center gap-2 mb-3 mt-3">
-            <svg class="heart ${votedForThis ? 'active' : 'inactive'}" data-id="${dog.id}" viewBox="0 0 24 24" width="24" height="24">
-              <path d="M12 20.5l-1.45-1.32C5.2 15.01 2 12.13 2 8.9 2 6.3 4.29 4 6.95 4c1.54 0 3.04.81 3.86 2.09C11.99 4.81 13.5 4 15.04 4 17.71 4 20 6.3 20 8.9c0 3.23-3.2 6.11-8.55 10.28L12 20.5z"/>
-            </svg>
+            <button class="heart-btn" aria-label="Vote for ${dog.name}">
+              <svg class="heart-svg ${votedForThis ? 'active' : ''}" viewBox="0 0 24 24">
+                <path d="M12.1 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 6 4 4 6.5 4c1.54 0 3.04.99 3.57 2.36h0.87C14.46 4.99 15.96 4 17.5 4 20 4 22 6 22 8.5c0 3.78-3.4 6.86-8.55 11.54l-1.35 1.31z" stroke-width="2"/>
+              </svg>
+            </button>
             <button class="vote-btn ${votedForThis ? 'voted' : ''}" ${votedForThis ? 'disabled' : ''} data-id="${dog.id}">
-              ${votedForThis ? 'Voted' : 'Vote'}${votedForThis ? '<span class="paw-print">🐾</span>' : ''}
+              ${votedForThis ? 'Voted <span class="paw-print">🐾</span>' : 'Vote'}
             </button>
             <span class="votes-count">Votes:<br><span id="votes-${dog.id}">${dog.votes}</span></span>
           </div>
@@ -228,14 +251,15 @@
         `;
 
         // Heart voting logic
-        card.querySelector('.heart').onclick = function() {
-          if (this.classList.contains('active')) return;
-          this.classList.add('active');
+        card.querySelector('.heart-btn').onclick = function() {
+          const heart = card.querySelector('.heart-svg');
+          if (heart.classList.contains('active')) return;
+          heart.classList.add('active');
           showConfetti(card);
           const voteBtn = card.querySelector('.vote-btn');
           voteBtn.classList.add('voted');
           voteBtn.disabled = true;
-          voteBtn.innerHTML = 'Voted<span class="paw-print">🐾</span>';
+          voteBtn.innerHTML = 'Voted <span class="paw-print">🐾</span>';
           // Increase votes instantly
           let vSpan = card.querySelector('#votes-' + dog.id);
           vSpan.textContent = parseInt(vSpan.textContent) + 1;
@@ -252,8 +276,8 @@
 
         // Vote button (triggers heart if not voted)
         card.querySelector('.vote-btn').onclick = function() {
-          if (!card.querySelector('.heart').classList.contains('active')) {
-            card.querySelector('.heart').click();
+          if (!card.querySelector('.heart-svg').classList.contains('active')) {
+            card.querySelector('.heart-btn').click();
           }
         };
 
