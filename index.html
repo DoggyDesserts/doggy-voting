@@ -19,7 +19,6 @@
       padding: 2.2rem 1.4rem 1.6rem 1.4rem;
       text-align: center;
       position: relative;
-      transition: box-shadow 0.2s;
       margin-bottom: 1.5rem;
       min-width: 260px;
       max-width: 310px;
@@ -28,16 +27,15 @@
     }
     .dog-photo {
       border-radius: 1rem;
-      border: 3px solid #25b3ad;
       width: 180px; height: 180px;
       object-fit: cover;
-      box-shadow: 0 2px 8px rgba(60,100,90,0.10);
       margin-bottom: 1.1rem;
       background: #eee;
       transition: border 0.2s;
-    }
-    .dog-card:hover .dog-photo {
-      border: 3px solid #1c9692;
+      border: none;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
     }
     .dog-name {
       font-size: 1.45rem;
@@ -58,15 +56,23 @@
       width: 2.1rem;
       height: 2.1rem;
       cursor: pointer;
-      transition: transform 0.12s;
       vertical-align: middle;
       margin-right: 0.13rem;
+      transition: transform 0.12s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .heart.active {
+    .heart svg {
+      display: block;
+      width: 2.1rem;
+      height: 2.1rem;
+    }
+    .heart.active svg {
       fill: #e74c3c;
       animation: bounceHeart 0.45s;
     }
-    .heart.inactive {
+    .heart.inactive svg {
       fill: #e0e0e0;
       transition: fill 0.13s;
     }
@@ -84,14 +90,18 @@
       padding: 0.5rem 1.5rem;
       font-size: 1.1rem;
       font-weight: 600;
-      transition: background 0.18s;
+      transition: background 0.18s, color 0.18s;
       cursor: pointer;
       min-width: 88px;
       box-shadow: 0 2px 6px rgba(37,179,173,0.07);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
     }
     .vote-btn.voted {
-      background: #56e18b;
-      color: #20262a;
+      background: #25b3ad;
+      color: #fff;
       cursor: not-allowed;
     }
     .votes-count {
@@ -124,18 +134,6 @@
     .share-btn:hover svg {
       transform: translateX(3px);
     }
-    .confetti {
-      position: absolute;
-      left: 50%; top: 35px;
-      pointer-events: none;
-      width: 70px; height: 70px;
-      z-index: 2;
-      opacity: 1;
-      transition: opacity 0.5s;
-    }
-    .confetti.hide {
-      opacity: 0;
-    }
     .banner {
       background: #fff8ea;
       padding: 1.15rem 0 0.6rem 0;
@@ -166,28 +164,9 @@
   </main>
 
   <script>
-    // Sheet/Script config
     const sheetCSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQBmlL5KZtwZnC7FVy6qUbjIgusWS53DIoAK2pMyDM9f8xuC5_gzzNlYBTt9ncMzK5uxoV1H5KMz8Ap/pub?output=csv';
     const apiURL = 'https://script.google.com/macros/s/AKfycbyqMg0l0LXz9zUwSj1dn2HXG2LmMBAVp_cVAXgXOiXF27qvoLi2UaPJgN3kFZEVppw/exec';
 
-    // Confetti animation
-    function showConfetti(parent) {
-      let confetti = document.createElement('div');
-      confetti.className = 'confetti';
-      confetti.innerHTML = `
-        <svg width="70" height="70">
-          <circle cx="20" cy="20" r="5" fill="#25b3ad"/>
-          <circle cx="50" cy="20" r="5" fill="#56e18b"/>
-          <circle cx="35" cy="50" r="5" fill="#f9d265"/>
-          <circle cx="55" cy="55" r="4" fill="#e74c3c"/>
-          <circle cx="15" cy="48" r="4" fill="#9e72ef"/>
-        </svg>`;
-      parent.appendChild(confetti);
-      setTimeout(() => { confetti.classList.add('hide'); }, 700);
-      setTimeout(() => { confetti.remove(); }, 1200);
-    }
-
-    // Fetch CSV data
     function fetchDogs() {
       return fetch(sheetCSV)
         .then(r => r.text())
@@ -200,7 +179,6 @@
         });
     }
 
-    // Render dogs
     function renderDogs(dogs) {
       const voted = JSON.parse(localStorage.getItem('doggyVotes') || '[]');
       const dogsDiv = document.getElementById('dogs');
@@ -211,14 +189,16 @@
         card.className = 'dog-card';
 
         card.innerHTML = `
-          <img class="dog-photo mx-auto" src="${dog.img}" alt="${dog.name}" />
+          <img class="dog-photo" src="${dog.img}" alt="${dog.name}" />
           <div class="dog-name">${dog.name.toUpperCase()}</div>
           <div class="actions-row">
-            <svg class="heart ${votedForThis ? 'active' : 'inactive'}" data-id="${dog.id}" viewBox="0 0 24 24">
-              <path d="M12 21s-5.7-4.8-8.3-7.6A5.36 5.36 0 0 1 3 7.7a5.47 5.47 0 0 1 9-3.91A5.47 5.47 0 0 1 21 7.7a5.36 5.36 0 0 1-.7 5.7C17.7 16.2 12 21 12 21z"/>
-            </svg>
+            <span class="heart ${votedForThis ? 'active' : 'inactive'}" data-id="${dog.id}">
+              <svg viewBox="0 0 32 32">
+                <path d="M16 29s-9.1-7.8-13.2-12.2C-1.2 11.6 2.7 5 8.6 5 12.1 5 14.1 7.2 16 9.4 17.9 7.2 19.9 5 23.4 5c5.9 0 9.8 6.6 5.8 11.8C25.1 21.2 16 29 16 29z"/>
+              </svg>
+            </span>
             <button class="vote-btn ${votedForThis ? 'voted' : ''}" ${votedForThis ? 'disabled' : ''} data-id="${dog.id}">
-              ${votedForThis ? 'Voted! 🎉' : 'Vote'}
+              ${votedForThis ? 'Voted! 🐾🐾' : 'Vote'}
             </button>
             <span class="votes-count">Votes: <span id="votes-${dog.id}">${dog.votes}</span></span>
           </div>
@@ -232,11 +212,10 @@
         card.querySelector('.heart').onclick = function() {
           if (this.classList.contains('active')) return;
           this.classList.add('active');
-          showConfetti(card);
           const voteBtn = card.querySelector('.vote-btn');
           voteBtn.classList.add('voted');
           voteBtn.disabled = true;
-          voteBtn.textContent = 'Voted! 🎉';
+          voteBtn.textContent = 'Voted! 🐾🐾';
           let vSpan = card.querySelector('#votes-' + dog.id);
           vSpan.textContent = parseInt(vSpan.textContent) + 1;
           voted.push(dog.id);
