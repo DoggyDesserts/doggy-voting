@@ -7,10 +7,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;600&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body {
+    html, body {
       background: #fef9f2;
       font-family: 'Poppins', sans-serif;
       margin: 0;
+      padding: 0;
     }
     .dog-card {
       background: #fff;
@@ -24,8 +25,8 @@
       justify-content: flex-start;
     }
     .dog-img-wrap {
-      width: 200px;
-      height: 200px;
+      width: 170px;
+      height: 170px;
       margin: 0 auto;
       margin-top: 18px;
       margin-bottom: 10px;
@@ -37,8 +38,8 @@
       overflow: hidden;
     }
     .dog-img {
-      width: 200px;
-      height: 200px;
+      width: 170px;
+      height: 170px;
       object-fit: cover;
       border-radius: 18px;
       background: #eee;
@@ -84,12 +85,13 @@
       opacity: 0.92;
     }
     .vote-heart {
-      width: 1.27em;
-      height: 1.27em;
+      width: 1.25em;
+      height: 1.25em;
       fill: #e64880;
       margin-right: 0.38em;
       margin-bottom: 0.08em;
       vertical-align: middle;
+      /* SVG sharp heart below */
     }
     .share-btn {
       display: flex;
@@ -125,18 +127,37 @@
       right: 24px;
     }
     .copied-tip.show { opacity: 1; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 32px;
+      transform: translateX(-50%);
+      background: #24262f;
+      color: #fff;
+      font-size: 1.14rem;
+      padding: 1.05rem 2.5rem;
+      border-radius: 2.2rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.19s;
+      z-index: 200;
+      box-shadow: 0 3px 30px #0002;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+    .toast.show { opacity: 0.97; pointer-events: all; }
     @media (max-width: 950px) {
       .dog-card { width: 95vw; min-width: 220px; }
       .dog-card-footer { flex-direction: column; align-items: flex-start; gap: 0.52rem; }
       .dog-name { margin-left: 0.7rem; }
-      .dog-img-wrap, .dog-img { width: 92vw; max-width: 220px; height: 92vw; max-height: 220px; }
+      .dog-img-wrap, .dog-img { width: 92vw; max-width: 190px; height: 92vw; max-height: 190px; }
     }
     .tight-header { margin-top: 0 !important; }
   </style>
 </head>
-<body>
-  <div class="min-h-screen flex flex-col justify-center items-center px-2 py-4">
-    <h1 class="text-4xl font-bold text-white bg-[#25b3ad] py-7 w-full text-center mb-1 tight-header" style="letter-spacing:0.04em;">
+<body style="padding-top:0; margin-top:0;">
+  <div class="min-h-screen flex flex-col justify-center items-center px-2 py-2" style="padding-top:0; margin-top:0;">
+    <h1 class="text-4xl font-bold text-white bg-[#25b3ad] py-7 w-full text-center mb-1 tight-header" style="letter-spacing:0.04em; margin-top:0;">
       Doggy Desserts<br>
       <span class="text-xl font-semibold block mt-2">Monthly Dog Photo Competition</span>
     </h1>
@@ -145,11 +166,19 @@
       <div class="text-[#25b3ad] text-base">Vote for your favourite doggy. Each person can vote once per dog.</div>
     </div>
     <div class="flex flex-wrap justify-center gap-8 w-full max-w-6xl mt-2" id="dog-cards"></div>
+    <div class="toast" id="toastMsg"></div>
   </div>
 
   <script>
     const sheetCSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQBmlL5KZtwZnC7FVy6qUbjIgusWS53DIoAK2pMyDM9f8xuC5_gzzNlYBTt9ncMzK5uxoV1H5KMz8Ap/pub?output=csv';
     const apiURL = 'https://script.google.com/macros/s/AKfycbyqMg0l0LXz9zUwSj1dn2HXG2LmMBAVp_cVAXgXOiXF27qvoLi2UaPJgN3kFZEVppw/exec';
+
+    function showToast(msg) {
+      const t = document.getElementById('toastMsg');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2000);
+    }
 
     function fetchDogs() {
       return fetch(sheetCSV)
@@ -180,7 +209,7 @@
           <div class="dog-card-footer">
             <button class="vote-pill${votedForThis ? ' voted' : ''}" ${votedForThis ? 'disabled' : ''} data-id="${dog.id}">
               <svg class="vote-heart" viewBox="0 0 24 24">
-                <path d="M12 21c-.3 0-.7-.1-1-.4-1.4-1.1-2.8-2.2-4-3.4C3.2 15.3 2 13.3 2 11.3 2 8.7 4.2 6.5 6.8 6.5c1.1 0 2.2.4 3 1.1.8-.7 1.9-1.1 3-1.1C19.8 6.5 22 8.7 22 11.3c0 2-1.2 4-5 6.9-1.2 1.2-2.6 2.3-4 3.4-.3.3-.7.4-1 .4z"/>
+                <path d="M12 21.35l-1.45-1.32C5.14 15.36 2 12.28 2 8.5 2 6.01 4.02 4 6.5 4c1.54 0 3.04.99 3.57 2.36h0.87C14.46 4.99 15.96 4 17.5 4 19.98 4 22 6.01 22 8.5c0 3.78-3.14 6.86-8.55 11.54L12 21.35z"/>
               </svg>
               <span style="margin-left:0;">${dog.votes} Votes</span>
             </button>
@@ -208,6 +237,7 @@
             headers: {'Content-Type':'application/x-www-form-urlencoded'},
             body: 'id=' + encodeURIComponent(dog.id)
           });
+          showToast("Thanks for voting!");
         };
 
         // Share
