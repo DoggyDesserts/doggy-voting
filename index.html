@@ -12,196 +12,195 @@
       font-family: 'Poppins', sans-serif;
     }
     .vote-pill {
-      transition: background 0.2s, color 0.2s;
-      box-shadow: 0 2px 10px rgba(253,207,228,0.06);
-      gap: 0.5rem;
-    }
-    .vote-pill.voted {
-      background: #fdcfe4 !important;
-      color: #e64880 !important;
-    }
-    .vote-heart {
-      width: 1.6em;
-      height: 1.6em;
-      margin-right: 0.35em;
-      vertical-align: middle;
-      fill: #e64880;
-      transition: fill 0.2s;
-      display: inline-block;
-    }
-    .vote-pill:not(.voted) .vote-heart {
-      fill: #ff92c4;
-    }
-    .share-btn {
-      background: #e9f4ff;
-      color: #2196f3;
-      border: none;
-      border-radius: 999px;
+      background: #ffe5f1;
+      color: #e64880;
+      transition: background 0.15s, color 0.15s;
       font-weight: 600;
-      font-size: 1.04rem;
-      display: inline-flex;
+    }
+    .vote-pill .heart {
+      width: 1.5em;
+      height: 1.5em;
+      margin-right: 0.5em;
+      fill: #e64880;
+      vertical-align: middle;
+    }
+    .share-pill {
+      background: #e9f4ff;
+      color: #3da3ed;
+      font-weight: 600;
+      transition: background 0.15s;
+      display: flex;
       align-items: center;
-      gap: 0.4rem;
-      padding: 0.55rem 1.3rem 0.55rem 1.1rem;
-      cursor: pointer;
-      transition: background 0.16s, color 0.16s;
-      box-shadow: 0 2px 8px rgba(33,150,243,0.05);
+      gap: 0.35em;
     }
-    .share-btn:active {
-      background: #b8e3ff;
-      color: #1875c5;
+    .share-pill .arrow {
+      width: 1.3em;
+      height: 1.3em;
+      margin-left: 0.1em;
+      fill: #3da3ed;
+      vertical-align: middle;
+      transition: transform 0.2s;
     }
-    .copied-tip {
-      font-size: 1rem;
-      margin-top: 4px;
-      color: #63b7e8;
-      opacity: 0;
-      transition: opacity 0.18s;
-      pointer-events: none;
-      position: absolute;
-      right: 12px;
-      bottom: 6px;
-      z-index: 2;
+    .share-pill:hover .arrow {
+      transform: translateX(4px);
     }
-    .copied-tip.show {
-      opacity: 1;
+    .dog-card {
+      box-shadow: 0 4px 20px rgba(0,0,0,0.09);
+      border-radius: 1.3rem;
+      overflow: hidden;
+      background: #fff;
+      width: 320px;
+      margin-bottom: 32px;
+      display: flex;
+      flex-direction: column;
     }
     .dog-img {
-      width: 120px;
-      height: 120px;
-      object-fit: cover;
-      border-radius: 1.2rem;
       background: #e6e8ec;
-      display: block;
-      margin: 0 auto 1.2rem auto;
-      box-shadow: 0 2px 12px rgba(40,40,80,0.09);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 205px;
     }
-    .card-title {
-      font-size: 1.32rem;
+    .dog-img img {
+      width: 142px;
+      height: 142px;
+      object-fit: cover;
+      border-radius: 22px;
+      border: none;
+      box-shadow: 0 1px 6px rgba(50,60,70,0.07);
+      background: #ececec;
+      margin-top: 24px;
+      margin-bottom: 18px;
+    }
+    .dog-content {
+      padding: 34px 28px 24px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1 1 auto;
+      justify-content: flex-end;
+    }
+    .dog-name {
+      font-size: 1.5rem;
       font-weight: 700;
-      letter-spacing: 0.01em;
-      margin-bottom: 0.2rem;
-      text-align: left;
       color: #24262f;
-      line-height: 1.2;
+      margin-bottom: 0.1em;
     }
-    .votes-label {
-      font-size: 1.09rem;
-      font-weight: 500;
-      color: #e64880;
-      margin-left: 0.1rem;
-      letter-spacing: 0.01em;
+    .dog-votes-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 16px;
     }
-    .card-box {
-      box-shadow: 0 6px 28px rgba(60,50,70,0.09);
+    @media (max-width: 990px) {
+      .flex-wrap { flex-wrap: wrap; }
+      .dog-card { width: 98vw; max-width: 360px; }
     }
-    @media (max-width: 900px) {
-      .dog-cards-row { flex-direction: column; align-items: centre;}
-      .card-box { width: 96vw; margin: 0 auto 1.5rem auto; }
+    @media (max-width: 600px) {
+      .dog-card { width: 99vw; min-width: 0; }
     }
   </style>
 </head>
 <body>
-  <div class="w-full bg-[#25b3ad] text-white py-6">
+  <div class="w-full bg-[#25b3ad] text-white py-7">
     <div class="text-center">
       <h1 class="text-4xl font-bold mb-1" style="letter-spacing:0.04em;">Doggy Desserts</h1>
       <div class="text-xl font-semibold mb-2">Monthly Dog Photo Competition</div>
-      <div class="my-3">
-        <div class="inline-block bg-[#fffbe9] text-[#25b3ad] font-bold rounded-lg px-6 py-2 text-lg mb-1">
-          Which dog will win a Doggy Desserts cake? Vote now!
-        </div>
+      <div class="mb-2">
+        <span class="bg-[#fffbe9] text-[#25b3ad] px-5 py-2 rounded-xl font-bold text-lg">Which dog will win a Doggy Desserts cake? Vote now!</span>
       </div>
-      <div class="text-lg font-normal">Vote for your favourite doggy. Each person can vote once per dog.</div>
+      <div class="text-lg mt-2 font-normal">Vote for your favourite doggy. Each person can vote once per dog.</div>
     </div>
   </div>
-
-  <div class="flex justify-center mt-6">
-    <div class="flex flex-row flex-wrap justify-center gap-8 dog-cards-row w-full max-w-6xl">
-      <!-- Dog Card: Repeat this block for each dog! -->
-      <div class="bg-white rounded-3xl card-box overflow-hidden flex flex-col w-[320px] mb-3">
-        <div class="flex justify-center items-center py-8 bg-[#e6e8ec]">
-          <img src="https://static.wixstatic.com/media/3342f4_064146b7d3ff4c51b27fd900bc9a6bfe~mv2.jpg" alt="Shadow" class="dog-img"/>
-        </div>
-        <div class="p-7 pt-4 flex-1 flex flex-col justify-end relative">
-          <div class="card-title mb-2">SHADOW</div>
-          <div class="flex flex-row items-center gap-3 mt-2">
-            <button class="vote-pill flex items-center px-5 py-2 rounded-full font-semibold bg-[#ffe4ef] text-[#e64880] focus:outline-none active:scale-95 text-lg select-none" onclick="handleVote(this, 0)">
-              <svg class="vote-heart" viewBox="0 0 24 24">
-                <path d="M12 21.35l-1.45-1.32C5.1 15.36 2 12.28 2 8.5
-                         2 6.5 3.5 5 5.5 5c1.54 0 3.04 1.04 3.57 2.36h1.87C13.46 6.04 14.96 5 16.5 5
-                         18.5 5 20 6.5 20 8.5c0 3.78-3.1 6.86-8.55 11.54z"/>
-              </svg>
-              <span class="votes-label"><span class="votes">2</span> Votes</span>
-            </button>
-            <button class="share-btn ml-auto" title="Share" onclick="copyShare(this)">
-              Share
-              <svg width="22" height="22" viewBox="0 0 20 20" fill="none">
-                <path d="M14 7.5L10 3.5M10 3.5L6 7.5M10 3.5V14.5" stroke="#2196f3" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-            </button>
-            <div class="copied-tip absolute">Link copied!</div>
-          </div>
+  <div class="w-full flex flex-wrap justify-center gap-9 mt-8 mb-14">
+    <!-- CARD 1 -->
+    <div class="dog-card">
+      <div class="dog-img">
+        <img src="https://static.wixstatic.com/media/3342f4_064146b7d3ff4c51b27fd900bc9a6bfe~mv2.jpg" alt="Shadow"/>
+      </div>
+      <div class="dog-content">
+        <div class="dog-name">SHADOW</div>
+        <div class="dog-votes-row">
+          <button class="vote-pill px-5 py-2 rounded-full flex items-center select-none border-0 outline-none text-lg" onclick="handleVote(this)">
+            <svg class="heart" viewBox="0 0 24 24">
+              <path d="M12 21s-5.7-4.8-8.3-7.6A5.36 5.36 0 0 1 3 7.7a5.47 5.47 0 0 1 9-3.91A5.47 5.47 0 0 1 21 7.7a5.36 5.36 0 0 1-.7 5.7C17.7 16.2 12 21 12 21z"/>
+            </svg>
+            <span class="votes">2 Votes</span>
+          </button>
+          <button class="share-pill px-5 py-2 rounded-full border-0 outline-none select-none text-base" onclick="copyShare(this)">
+            Share
+            <svg class="arrow" viewBox="0 0 20 20">
+              <path d="M8.293 15.707a1 1 0 0 1 0-1.414L11.586 11H4a1 1 0 1 1 0-2h7.586l-3.293-3.293a1 1 0 0 1 1.414-1.414l5 5a1 1 0 0 1 0 1.414l-5 5a1 1 0 0 1-1.414 0z"/>
+            </svg>
+          </button>
         </div>
       </div>
-      <!-- Dog Card End -->
-
-      <!-- Example: Next Dog Card -->
-      <div class="bg-white rounded-3xl card-box overflow-hidden flex flex-col w-[320px] mb-3">
-        <div class="flex justify-center items-center py-8 bg-[#e6e8ec]">
-          <img src="https://static.wixstatic.com/media/3342f4_93bfe3b0e4446d483ff0185ff9686f~mv2.jpg" alt="Rosie" class="dog-img"/>
-        </div>
-        <div class="p-7 pt-4 flex-1 flex flex-col justify-end relative">
-          <div class="card-title mb-2">ROSIE</div>
-          <div class="flex flex-row items-center gap-3 mt-2">
-            <button class="vote-pill flex items-center px-5 py-2 rounded-full font-semibold bg-[#ffe4ef] text-[#e64880] focus:outline-none active:scale-95 text-lg select-none" onclick="handleVote(this, 1)">
-              <svg class="vote-heart" viewBox="0 0 24 24">
-                <path d="M12 21.35l-1.45-1.32C5.1 15.36 2 12.28 2 8.5
-                         2 6.5 3.5 5 5.5 5c1.54 0 3.04 1.04 3.57 2.36h1.87C13.46 6.04 14.96 5 16.5 5
-                         18.5 5 20 6.5 20 8.5c0 3.78-3.1 6.86-8.55 11.54z"/>
-              </svg>
-              <span class="votes-label"><span class="votes">3</span> Votes</span>
-            </button>
-            <button class="share-btn ml-auto" title="Share" onclick="copyShare(this)">
-              Share
-              <svg width="22" height="22" viewBox="0 0 20 20" fill="none">
-                <path d="M14 7.5L10 3.5M10 3.5L6 7.5M10 3.5V14.5" stroke="#2196f3" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-            </button>
-            <div class="copied-tip absolute">Link copied!</div>
-          </div>
+    </div>
+    <!-- CARD 2 -->
+    <div class="dog-card">
+      <div class="dog-img">
+        <img src="https://static.wixstatic.com/media/3342f4_93bfe3b0e4446d483ff0185ff9686f~mv2.jpg" alt="Rosie"/>
+      </div>
+      <div class="dog-content">
+        <div class="dog-name">ROSIE</div>
+        <div class="dog-votes-row">
+          <button class="vote-pill px-5 py-2 rounded-full flex items-center select-none border-0 outline-none text-lg" onclick="handleVote(this)">
+            <svg class="heart" viewBox="0 0 24 24">
+              <path d="M12 21s-5.7-4.8-8.3-7.6A5.36 5.36 0 0 1 3 7.7a5.47 5.47 0 0 1 9-3.91A5.47 5.47 0 0 1 21 7.7a5.36 5.36 0 0 1-.7 5.7C17.7 16.2 12 21 12 21z"/>
+            </svg>
+            <span class="votes">3 Votes</span>
+          </button>
+          <button class="share-pill px-5 py-2 rounded-full border-0 outline-none select-none text-base" onclick="copyShare(this)">
+            Share
+            <svg class="arrow" viewBox="0 0 20 20">
+              <path d="M8.293 15.707a1 1 0 0 1 0-1.414L11.586 11H4a1 1 0 1 1 0-2h7.586l-3.293-3.293a1 1 0 0 1 1.414-1.414l5 5a1 1 0 0 1 0 1.414l-5 5a1 1 0 0 1-1.414 0z"/>
+            </svg>
+          </button>
         </div>
       </div>
-      <!-- Dog Card End -->
-
-      <!-- Add further cards for each dog in the same way -->
+    </div>
+    <!-- CARD 3 -->
+    <div class="dog-card">
+      <div class="dog-img">
+        <img src="https://static.wixstatic.com/media/3342f4_d3ef7a4a8e574a4e8c8e68ef97444116~mv2.jpg" alt="Rocco"/>
+      </div>
+      <div class="dog-content">
+        <div class="dog-name">ROCCO</div>
+        <div class="dog-votes-row">
+          <button class="vote-pill px-5 py-2 rounded-full flex items-center select-none border-0 outline-none text-lg" onclick="handleVote(this)">
+            <svg class="heart" viewBox="0 0 24 24">
+              <path d="M12 21s-5.7-4.8-8.3-7.6A5.36 5.36 0 0 1 3 7.7a5.47 5.47 0 0 1 9-3.91A5.47 5.47 0 0 1 21 7.7a5.36 5.36 0 0 1-.7 5.7C17.7 16.2 12 21 12 21z"/>
+            </svg>
+            <span class="votes">2 Votes</span>
+          </button>
+          <button class="share-pill px-5 py-2 rounded-full border-0 outline-none select-none text-base" onclick="copyShare(this)">
+            Share
+            <svg class="arrow" viewBox="0 0 20 20">
+              <path d="M8.293 15.707a1 1 0 0 1 0-1.414L11.586 11H4a1 1 0 1 1 0-2h7.586l-3.293-3.293a1 1 0 0 1 1.414-1.414l5 5a1 1 0 0 1 0 1.414l-5 5a1 1 0 0 1-1.414 0z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
-
   <script>
-    // Voting: disables and fills pill + heart, increments number, disables further clicks
-    function handleVote(btn, idx) {
-      if(btn.classList.contains('voted')) return;
+    // Simple local voting effect for demo
+    function handleVote(btn) {
+      if (btn.classList.contains('voted')) return;
       btn.classList.add('voted');
-      btn.querySelector('.vote-heart').style.fill = '#e64880';
-      btn.querySelector('.votes').textContent = Number(btn.querySelector('.votes').textContent) + 1;
+      const votesSpan = btn.querySelector('.votes');
+      let n = parseInt(votesSpan.textContent) || 0;
+      votesSpan.textContent = (n + 1) + ' Votes';
       btn.disabled = true;
-      // Would POST here to backend for real votes!
-      setTimeout(() => {
-        btn.blur();
-      }, 300);
+      btn.style.opacity = '0.7';
     }
-
-    // Share button logic
     function copyShare(btn) {
-      const card = btn.closest('.flex.flex-col');
-      const name = card.querySelector('.card-title').textContent;
-      const url = window.location.origin + window.location.pathname + "#" + encodeURIComponent(name.trim());
+      const card = btn.closest('.dog-card');
+      const name = card.querySelector('.dog-name').textContent.trim();
+      const url = window.location.origin + window.location.pathname + "#" + encodeURIComponent(name);
       navigator.clipboard.writeText(url);
-      const tip = btn.parentElement.querySelector('.copied-tip');
-      if(tip) {
-        tip.classList.add('show');
-        setTimeout(() => tip.classList.remove('show'), 1200);
-      }
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.innerHTML = 'Share <svg class="arrow" viewBox="0 0 20 20"><path d="M8.293 15.707a1 1 0 0 1 0-1.414L11.586 11H4a1 1 0 1 1 0-2h7.586l-3.293-3.293a1 1 0 0 1 1.414-1.414l5 5a1 1 0 0 1 0 1.414l-5 5a1 1 0 0 1-1.414 0z"/></svg>', 1100);
     }
   </script>
 </body>
