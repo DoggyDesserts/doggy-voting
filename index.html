@@ -10,6 +10,7 @@
     body {
       background: #fef9f2;
       font-family: 'Poppins', sans-serif;
+      margin: 0;
     }
     .dog-card {
       background: #fff;
@@ -17,27 +18,31 @@
       box-shadow: 0 4px 18px rgba(60, 70, 130, 0.13);
       overflow: hidden;
       width: 320px;
-      min-width: 280px;
-      margin-bottom: 1.7rem;
+      margin-bottom: 1.5rem;
       display: flex;
       flex-direction: column;
+      justify-content: flex-start;
     }
     .dog-img-wrap {
-      background: #e6e8ec;
+      width: 150px;
+      height: 150px;
+      margin: 0 auto;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      /* Remove grey background */
+      background: none;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 180px;
-      padding-top: 18px;
-      padding-bottom: 10px;
+      border-radius: 18px;
+      overflow: hidden;
     }
     .dog-img {
-      width: 130px;
-      height: 130px;
+      width: 150px;
+      height: 150px;
       object-fit: cover;
       border-radius: 18px;
       background: #eee;
-      box-shadow: 0 2px 7px #e2e2e2;
       border: none;
       display: block;
     }
@@ -46,14 +51,14 @@
       font-weight: 700;
       color: #24262f;
       text-align: left;
-      margin: 1.2rem 0 0.3rem 1.4rem;
+      margin: 0 0 0.3rem 1.4rem;
       letter-spacing: 0.01em;
     }
     .dog-card-footer {
       display: flex;
       align-items: centre;
       gap: 0.9rem;
-      padding: 0 1.4rem 1.5rem 1.4rem;
+      padding: 0 1.4rem 1.4rem 1.4rem;
       margin-top: 0.5rem;
     }
     .vote-pill {
@@ -126,15 +131,17 @@
       .dog-card-footer { flex-direction: column; align-items: flex-start; gap: 0.52rem; }
       .dog-name { margin-left: 0.7rem; }
     }
+    /* Remove giant top gap */
+    .tight-header { margin-top: 0 !important; }
   </style>
 </head>
 <body>
-  <div class="min-h-screen flex flex-col justify-center items-center px-2 py-6">
-    <h1 class="text-4xl font-bold text-white bg-[#25b3ad] py-7 w-full text-center mb-1" style="letter-spacing:0.04em;">
+  <div class="min-h-screen flex flex-col justify-center items-center px-2 py-4">
+    <h1 class="text-4xl font-bold text-white bg-[#25b3ad] py-7 w-full text-center mb-1 tight-header" style="letter-spacing:0.04em;">
       Doggy Desserts<br>
       <span class="text-xl font-semibold block mt-2">Monthly Dog Photo Competition</span>
     </h1>
-    <div class="text-center mb-2">
+    <div class="text-center mb-2" style="margin-top:0.1rem;">
       <div class="bg-[#fff9ea] text-[#25b3ad] rounded-xl px-4 py-2 font-bold text-lg inline-block mb-2">Which dog will win a Doggy Desserts cake? Vote now!</div>
       <div class="text-[#25b3ad] text-base">Vote for your favourite doggy. Each person can vote once per dog.</div>
     </div>
@@ -142,12 +149,9 @@
   </div>
 
   <script>
-    // SHEET DATA
     const sheetCSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQBmlL5KZtwZnC7FVy6qUbjIgusWS53DIoAK2pMyDM9f8xuC5_gzzNlYBTt9ncMzK5uxoV1H5KMz8Ap/pub?output=csv';
     const apiURL = 'https://script.google.com/macros/s/AKfycbyqMg0l0LXz9zUwSj1dn2HXG2LmMBAVp_cVAXgXOiXF27qvoLi2UaPJgN3kFZEVppw/exec';
-    const votedKey = 'voted_July_2025_';
 
-    // LOAD DOGS
     function fetchDogs() {
       return fetch(sheetCSV)
         .then(r => r.text())
@@ -191,7 +195,7 @@
           </div>
         `;
 
-        // VOTING LOGIC
+        // Voting
         card.querySelector('.vote-pill').onclick = function() {
           if (votedForThis) return;
           this.classList.add('voted');
@@ -200,7 +204,6 @@
           vSpan.textContent = (parseInt(vSpan.textContent) + 1) + " Votes";
           voted.push(dog.id);
           localStorage.setItem('doggyVotes', JSON.stringify(voted));
-          // POST to API
           fetch(apiURL, {
             method: 'POST',
             headers: {'Content-Type':'application/x-www-form-urlencoded'},
@@ -208,7 +211,7 @@
           });
         };
 
-        // SHARE LOGIC
+        // Share
         card.querySelector('.share-btn').onclick = function() {
           const url = window.location.origin + window.location.pathname + "#dog-" + encodeURIComponent(dog.id);
           navigator.clipboard.writeText(url);
