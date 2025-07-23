@@ -14,221 +14,217 @@
     .dog-card {
       background: #fff;
       border-radius: 1.5rem;
-      box-shadow: 0 4px 24px rgba(50,40,60,0.09);
-      width: 320px;
-      margin-bottom: 1.2rem;
-      transition: box-shadow 0.2s;
-      display: flex;
-      flex-direction: column;
-    }
-    .dog-card:hover {
-      box-shadow: 0 6px 30px rgba(40,50,100,0.13);
+      box-shadow: 0 4px 28px rgba(60, 70, 130, 0.12);
+      overflow: hidden;
+      width: 310px;
+      min-width: 280px;
+      margin-bottom: 1.5rem;
+      transition: box-shadow 0.19s;
     }
     .dog-img-wrap {
-      width: 148px; height: 148px;
-      overflow: hidden;
-      border-radius: 1.1rem;
       background: #e6e8ec;
+      padding: 32px 0 0 0;
       display: flex;
-      align-items: center;
       justify-content: center;
-      margin: 0 auto;
-      margin-top: 1.8rem;
-      margin-bottom: 0.7rem;
+      align-items: flex-start;
+      height: 210px;
     }
     .dog-img {
-      width: 100%; height: 100%;
+      width: 140px;
+      height: 140px;
       object-fit: cover;
-      display: block;
-      background: #e6e8ec;
+      border-radius: 18px;
+      box-shadow: 0 2px 9px #e2e2e2;
     }
-    .heart-icon {
-      width: 1.6em;
-      height: 1.6em;
-      margin-right: 0.5em;
-      fill: #e64880;
-      vertical-align: middle;
-      transition: fill 0.2s;
-      display: inline-block;
+    .dog-name {
+      font-size: 1.44rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      color: #24262f;
+      margin: 0 0 0.7rem 0;
+      text-align: left;
+      margin-left: 1.6rem;
+      margin-top: 1.3rem;
+    }
+    .dog-card-footer {
+      padding: 0 1.6rem 1.3rem 1.6rem;
+      display: flex;
+      align-items: centre;
+      gap: 0.8rem;
     }
     .vote-pill {
-      transition: background 0.18s, color 0.18s;
-      background: #ffe4ef;
-      color: #e64880;
-      font-weight: 600;
-      font-size: 1.2rem;
-      border: none;
-      border-radius: 2em;
-      padding: 0.6em 1.7em 0.6em 1.1em;
       display: flex;
       align-items: center;
+      background: #ffe3ef;
+      color: #e64880;
+      border: none;
+      border-radius: 2rem;
+      padding: 0.8rem 1.3rem 0.8rem 1.3rem;
+      font-size: 1.18rem;
+      font-weight: 600;
       cursor: pointer;
-      margin-right: 0.5em;
-      margin-top: 0.6em;
+      transition: background 0.16s, color 0.16s;
+      box-shadow: 0 2px 8px #fcd7e8;
+      gap: 0.5rem;
+      min-width: 115px;
+      justify-content: center;
     }
     .vote-pill.voted {
       background: #fdcfe4;
       color: #e64880;
       cursor: not-allowed;
-      opacity: 0.82;
+      opacity: 0.92;
+    }
+    .vote-heart {
+      width: 1.5em;
+      height: 1.5em;
+      fill: #e64880;
+      display: inline-block;
+      margin-right: 0.28em;
+      margin-bottom: 0.07em;
+      vertical-align: middle;
     }
     .share-btn {
-      background: #eaf4ff;
-      color: #3e9ade;
+      display: flex;
+      align-items: center;
+      background: #e9f4ff;
+      color: #41a4ff;
       font-weight: 600;
       border: none;
-      border-radius: 2em;
-      padding: 0.58em 1.3em 0.58em 1.0em;
-      font-size: 1.07rem;
-      margin-left: 0.2em;
-      display: flex;
-      align-items: center;
-      gap: 0.3em;
+      border-radius: 2rem;
+      padding: 0.8rem 1.2rem;
+      font-size: 1.13rem;
       cursor: pointer;
-      transition: background 0.15s;
+      transition: background 0.13s, color 0.14s;
+      box-shadow: 0 2px 7px #c9e6fd;
+      gap: 0.5rem;
     }
-    .share-btn svg {
-      margin-left: 0.32em;
+    .share-arrow {
+      margin-left: 0.35em;
+      width: 1.1em;
+      height: 1.1em;
+      display: inline-block;
+      stroke: #41a4ff;
+      stroke-width: 2.2;
     }
-    .share-btn.copied {
-      background: #caf3df;
-      color: #34aa63;
+    .copied-tip {
+      font-size: 0.97rem;
+      color: #41a4ff;
+      opacity: 0;
+      margin-left: 0.4rem;
+      transition: opacity 0.18s;
+      pointer-events: none;
+      position: absolute;
+      bottom: 14px;
+      right: 34px;
     }
-    .dog-name {
-      text-align: centre;
-      font-size: 1.48rem;
-      font-weight: bold;
-      margin-top: 0.6em;
-      letter-spacing: 0.02em;
-      margin-bottom: 0.2em;
-      color: #24262f;
+    .copied-tip.show {
+      opacity: 1;
     }
-    .vote-row {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      margin-top: 0.4em;
-      gap: 0.2em;
-      margin-bottom: 0.2em;
-      min-height: 56px;
-      justify-content: flex-start;
-    }
-    @media (max-width: 1100px) {
-      .dog-card { width: 98vw; max-width: 330px; }
-    }
-    @media (max-width: 700px) {
-      .dog-card { width: 96vw; max-width: 380px;}
+    @media (max-width: 980px) {
+      .dog-card { width: 94vw; min-width: 240px; }
+      .dog-card-footer { flex-direction: column; align-items: flex-start; gap: 0.55rem; }
+      .dog-name { margin-left: 0.5rem;}
     }
   </style>
 </head>
 <body>
-  <div class="w-full bg-[#25b3ad] text-white py-7 mb-1">
-    <div class="text-center">
-      <h1 class="text-4xl font-bold mb-1" style="letter-spacing:0.04em;">Doggy Desserts</h1>
-      <div class="text-xl font-semibold mb-2">Monthly Dog Photo Competition</div>
-      <div class="mb-2">
-        <span class="inline-block px-4 py-1 text-base bg-[#fff8ea] text-[#25b3ad] font-bold rounded-xl">
-          Which dog will win a Doggy Desserts cake? Vote now!
-        </span>
-      </div>
-      <div class="text-lg mt-2 font-normal">Vote for your favourite doggy. Each person can vote once per dog.</div>
+  <div class="min-h-screen flex flex-col justify-center items-center px-2 py-6">
+    <h1 class="text-4xl font-bold text-white bg-[#25b3ad] py-7 w-full text-center mb-2" style="letter-spacing:0.04em;">Doggy Desserts<br>
+      <span class="text-xl font-semibold block mt-2">Monthly Dog Photo Competition</span>
+    </h1>
+    <div class="text-center mb-3">
+      <div class="bg-[#fff9ea] text-[#25b3ad] rounded-xl px-4 py-2 font-bold text-lg inline-block mb-2">Which dog will win a Doggy Desserts cake? Vote now!</div>
+      <div class="text-[#25b3ad] text-base">Vote for your favourite doggy. Each person can vote once per dog.</div>
+    </div>
+    <div class="flex flex-wrap justify-center gap-8 w-full max-w-6xl mt-2">
+      <!-- Dog Cards Rendered Here -->
     </div>
   </div>
-  <main>
-    <div id="dogs-list" class="flex flex-wrap justify-center gap-8 w-full max-w-7xl mx-auto mt-7 mb-10"></div>
-  </main>
+
   <script>
-    // CONFIG - Update with your live sheet CSV
+    // Your Google Sheet CSV link
     const sheetCSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQBmlL5KZtwZnC7FVy6qUbjIgusWS53DIoAK2pMyDM9f8xuC5_gzzNlYBTt9ncMzK5uxoV1H5KMz8Ap/pub?output=csv';
     const apiURL = 'https://script.google.com/macros/s/AKfycbyqMg0l0LXz9zUwSj1dn2HXG2LmMBAVp_cVAXgXOiXF27qvoLi2UaPJgN3kFZEVppw/exec';
-    const localKey = 'doggyVotes_July25';
+    const votedKey = 'voted_July_2025_';
 
-    function heartSVG() {
-      return `<svg class="heart-icon" viewBox="0 0 24 24"><path d="M12 21s-5.7-5-8-7.6C-0.4 9.9 2 5.5 6.5 5.5c1.7 0 3.3 0.8 4.2 2.1C11.2 6.3 12.8 5.5 14.5 5.5 19 5.5 21.4 9.9 20 13.4c-2.3 2.6-8 7.6-8 7.6z"/></svg>`;
-    }
-    function shareSVG() {
-      return `<svg height="22" width="22" viewBox="0 0 20 20" fill="none"><path d="M15.7 13.3a3.16 3.16 0 0 0-2.17.87l-5.05-2.53a3.28 3.28 0 0 0 0-1.34l5.05-2.53a3.16 3.16 0 1 0-.73-1.46l-5.05 2.53a3.15 3.15 0 1 0 0 5.08l5.05 2.53c.27-.53.74-.99 1.33-1.2.17-.06.36-.1.55-.1a3.16 3.16 0 1 0 1.02-6.17z" fill="#3e9ade"/></svg>`;
-    }
-
-    // Fetch sheet CSV
-    async function fetchDogs() {
-      let resp = await fetch(sheetCSV);
-      let txt = await resp.text();
-      let rows = txt.trim().split('\n').slice(1);
-      return rows.map(row => {
-        // ID,NAME,VOTES,DATE,IMAGE
-        let [id, name, votes, date, img] = row.split(',');
-        return {
-          id: id.trim(),
-          name: name.trim(),
-          votes: parseInt(votes.trim()) || 0,
-          img: img.trim()
-        }
-      });
+    function fetchDogs() {
+      return fetch(sheetCSV)
+        .then(r => r.text())
+        .then(csv => {
+          const rows = csv.trim().split('\n').slice(1);
+          return rows.map(row => {
+            const [id, name, votes, date, img] = row.split(',');
+            return {
+              id: id.trim(),
+              name: name.trim(),
+              votes: Number(votes),
+              img: img ? img.trim() : ''
+            };
+          });
+        });
     }
 
     function renderDogs(dogs) {
-      const voted = JSON.parse(localStorage.getItem(localKey) || '[]');
-      let html = dogs.map(dog => `
-        <div class="dog-card">
+      const voted = JSON.parse(localStorage.getItem('doggyVotes') || '[]');
+      const wrapper = document.querySelector('.flex.flex-wrap');
+      wrapper.innerHTML = '';
+      dogs.forEach(dog => {
+        const votedForThis = voted.includes(dog.id);
+        const card = document.createElement('div');
+        card.className = 'dog-card';
+
+        card.innerHTML = `
           <div class="dog-img-wrap">
-            <img src="${dog.img}" alt="${dog.name}" class="dog-img" onerror="this.onerror=null;this.src='https://svgshare.com/i/13Lf.svg';">
+            <img class="dog-img" src="${dog.img}" alt="${dog.name}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/616/616408.png';"/>
           </div>
           <div class="dog-name">${dog.name}</div>
-          <div class="vote-row">
-            <button class="vote-pill${voted.includes(dog.id) ? ' voted' : ''}" data-id="${dog.id}" ${voted.includes(dog.id) ? 'disabled' : ''}>
-              ${heartSVG()}
-              <span class="votes">${dog.votes}</span> Votes
+          <div class="dog-card-footer">
+            <button class="vote-pill${votedForThis ? ' voted' : ''}" ${votedForThis ? 'disabled' : ''} data-id="${dog.id}">
+              <svg class="vote-heart" viewBox="0 0 24 24"><path d="M12 21c-.3 0-.7-.1-1-.4-1.4-1.1-2.8-2.2-4-3.4C3.2 15.3 2 13.3 2 11.3 2 8.7 4.2 6.5 6.8 6.5c1.1 0 2.2.4 3 1.1.8-.7 1.9-1.1 3-1.1C19.8 6.5 22 8.7 22 11.3c0 2-1.2 4-5 6.9-1.2 1.2-2.6 2.3-4 3.4-.3.3-.7.4-1 .4z"/></svg>
+              <span><span class="votes">${dog.votes}</span> Votes</span>
             </button>
-            <button class="share-btn" data-id="${dog.id}">
-              Share ${shareSVG()}
+            <button class="share-btn" title="Share" onclick="copyShare(this)">
+              Share
+              <svg class="share-arrow" viewBox="0 0 24 24" fill="none"><path d="M5 12h14m0 0l-6-6m6 6l-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
+            <div class="copied-tip">Link copied!</div>
           </div>
-        </div>
-      `).join('');
-      document.getElementById('dogs-list').innerHTML = html;
+        `;
 
-      // Event Listeners
-      document.querySelectorAll('.vote-pill').forEach(btn => {
-        btn.onclick = async function() {
-          if (btn.classList.contains('voted')) return;
-          btn.classList.add('voted');
-          btn.disabled = true;
-          let v = btn.querySelector('.votes');
-          v.textContent = parseInt(v.textContent) + 1;
-
-          // Save to localStorage
-          let votes = JSON.parse(localStorage.getItem(localKey) || '[]');
-          votes.push(btn.dataset.id);
-          localStorage.setItem(localKey, JSON.stringify(votes));
-
-          // API call to increment
+        // Vote logic
+        card.querySelector('.vote-pill').onclick = function() {
+          if (votedForThis) return;
+          this.classList.add('voted');
+          this.disabled = true;
+          let vSpan = this.querySelector('.votes');
+          vSpan.textContent = parseInt(vSpan.textContent) + 1;
+          voted.push(dog.id);
+          localStorage.setItem('doggyVotes', JSON.stringify(voted));
+          // POST to API
           fetch(apiURL, {
             method: 'POST',
             headers: {'Content-Type':'application/x-www-form-urlencoded'},
-            body: 'id=' + encodeURIComponent(btn.dataset.id)
+            body: 'id=' + encodeURIComponent(dog.id)
           });
-        }
-      });
-      document.querySelectorAll('.share-btn').forEach(btn => {
-        btn.onclick = function() {
-          const id = btn.dataset.id;
-          const url = window.location.origin + window.location.pathname + '#dog-' + encodeURIComponent(id);
+        };
+
+        // Share feedback
+        card.querySelector('.share-btn').onclick = function() {
+          const url = window.location.origin + window.location.pathname + "#dog-" + encodeURIComponent(dog.id);
           navigator.clipboard.writeText(url);
-          btn.classList.add('copied');
-          btn.innerHTML = 'Copied! ' + shareSVG();
-          setTimeout(() => {
-            btn.classList.remove('copied');
-            btn.innerHTML = 'Share ' + shareSVG();
-          }, 1200);
-        }
+          const tip = card.querySelector('.copied-tip');
+          tip.classList.add('show');
+          setTimeout(() => tip.classList.remove('show'), 1200);
+        };
+
+        card.id = 'dog-' + dog.id;
+        wrapper.appendChild(card);
       });
     }
 
-    // MAIN
-    document.addEventListener('DOMContentLoaded', async function() {
-      const dogs = await fetchDogs();
-      renderDogs(dogs);
+    document.addEventListener('DOMContentLoaded', function() {
+      fetchDogs().then(renderDogs);
     });
   </script>
 </body>
